@@ -9,7 +9,7 @@ class Snake:
         self.segments = []
         self.endxpos = 0
         
-        for _ in range (10):
+        for _ in range (3):
             snake = Turtle("square")  
             snake.color("white")
             snake.penup()
@@ -61,9 +61,9 @@ class Snake:
         snake.setposition(self.segments[-1].position())
         self.segments.append(snake)
 
-    def collison_check(self):
-         for possible_segment in self.segments[1:]:
-             if self.segments[0].distance(possible_segment) < 21:
-                 return True
-             else:
-                 return False
+    # def collison_check(self):
+    #      for possible_segment in self.segments[1:]:
+    #          if self.segments[0].distance(possible_segment) < 15:
+    #              pass
+    #          else:
+    #              print("2")
