@@ -43,7 +43,7 @@ while is_game_on == True :
     
     for possible_segment in snake.segments[1:]:
         if snake.segments[0].distance(possible_segment) < 15:
-            scoreboard.game_over()
+            scoreboard.reset()
             is_game_on = False 
     
 
