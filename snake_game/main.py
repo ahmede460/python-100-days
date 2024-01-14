@@ -39,6 +39,7 @@ while is_game_on == True :
     if snake.segments[0].xcor() > 300 or snake.segments[0].xcor() < -300 or snake.segments[0].ycor() > 300 or snake.segments[0].ycor() < -300: 
 
         scoreboard.game_over()
+        scoreboard.reset()
         is_game_on = False
     
     for possible_segment in snake.segments[1:]:
