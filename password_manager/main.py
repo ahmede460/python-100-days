@@ -1,6 +1,7 @@
 from tkinter import *
 import random
 from tkinter import messagebox
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 #Password Generator Project
@@ -43,9 +44,49 @@ def add_button_func():
             pass_entry.delete(0, END)
 
 def write_to_csv(website,name,password):
-    file = open("password_manager/passwords.txt", "a") # open the file in append mode
-    file.write(f"{website} | {name} | {password}\n") # write the string with a newline
-    file.close() 
+
+
+    data_dict = {website:
+                 {
+                     "email":name,
+                     "password":password
+
+                 }
+    }
+    try:
+        file = open("password_manager/passwords.json", "r") # open the file in read mode
+        data = json.load(file)
+        data.update(data_dict)
+
+    #writing to the file
+        file = open("password_manager/passwords.json", "w") 
+        json.dump(data,file,indent=4)
+        file.close() 
+    except FileNotFoundError:
+
+        file = open("password_manager/passwords.json", "w") 
+        json.dump(data_dict,file,indent=4)
+        file.close() 
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+        
+
+
+
+
+def load_passwords_file():
+    try:
+        file = open("password_manager/passwords.json", "r") # open the file in read mode
+        data = json.load(file)
+        search_data = data[web_entry.get()]
+        messagebox.showinfo(title="website Info",message=f"website {web_entry.get()} \n username : {search_data['email']} \n password : {search_data['password']}")
+    except KeyError:
+        messagebox.showerror(title="website Info",message=f"Data does not exist!")
+
+
+
+
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -60,6 +101,9 @@ canvas.place(x=90,y=0)
 
 #Buttons
 
+gen_pass = Button(text="Search", command=load_passwords_file)
+gen_pass.place(x=240,y=175)
+
 gen_pass = Button(text="Generate", command=password_gen)
 gen_pass.place(x=240,y=225)
 
@@ -71,7 +115,7 @@ add_button.place(x=110,y=260)
 
 
 #TextInputs
-web_entry = Entry(width=30)
+web_entry = Entry(width=20)
 web_entry.place(x=110,y=180)
 web_entry.focus()
 
